@@ -17,11 +17,12 @@
   --primary-pink: #FF00FF;
   --primary-blue: #00C6CF;
 
-  --original-black: #000000;
+  --original-black: #181818;
   --original-white: #ffffff;
 }
 
 body {
   background-color: var(--primary-black);
   font-family: 'Roboto', sans-serif;
+  color: var(--primary-gray);
 }

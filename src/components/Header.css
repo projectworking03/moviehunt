@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 25px;
+    background-color: var(--original-black);
+}
+
+.header__branding > h1 {
+    text-transform: uppercase;
+    color: var(--primary-green);
+    letter-spacing: 2px;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+}

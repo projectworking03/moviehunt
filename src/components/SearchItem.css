@@ -1,0 +1,29 @@
+.searchItem {
+    display: flex;
+    align-items: center;
+    padding: 7px 10px 2px 9px;
+    border-bottom: 1px solid var(--secondary-black);
+    overflow: auto;
+    cursor: pointer;
+}
+
+.searchItem:hover {
+    transition: background-color 50ms ease-in;
+    background-color: var(--secondary-black);
+}
+
+/* Thumbnail */
+.searchItem__thumbnail > img {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
+
+/* Details */
+.searchItem__details {
+    padding: 0 0 0 10px;
+}
+
+.searchItem__details > h3 {
+    color: var(--secondary-gray);
+}

@@ -1,0 +1,23 @@
+.ratings {
+    display: flex;
+    margin-top: 5px;
+}
+
+.ratings__websites {
+    color: var(--original-white);
+}
+
+.ratings__ratings {
+    color: var(--primary-green);
+}
+
+.ratings__websites > p, 
+.ratings__ratings > p {
+    padding: 7px 7px 7px 0;
+    font-size: 20px;
+    border-bottom: 1px solid var(--secondary-black);
+}
+
+.ratings__ratings > p {
+    padding-left: 80px;
+}
