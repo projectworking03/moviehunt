@@ -24,19 +24,21 @@ const SearchItem = ({
   };
 
   return (
-    <div className="searchItem" onClick={handleClick}>
-      {/* Thumbnail */}
-      <div className="searchItem__thumbnail">
-        <img src={image} alt="thumbnail" />
-      </div>
+    image !== null && (
+      <div className="searchItem" onClick={handleClick}>
+        {/* Thumbnail */}
+        <div className="searchItem__thumbnail">
+          <img src={image} alt="thumbnail" />
+        </div>
 
-      {/* Details */}
-      <div className="searchItem__details">
-        <h3>
-          {title} {titleExtension}
-        </h3>
+        {/* Details */}
+        <div className="searchItem__details">
+          <h3>
+            {title} {titleExtension}
+          </h3>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

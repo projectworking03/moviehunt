@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import { searchInTMDB } from "../utilities/searchResults";
 
 import "./Search.css";
 import SearchItem from "./SearchItem";
-
-/*
-Structure of Results: [{}, {}, {}, ...]
-Structure of each Result: { id, title, titleExtension, image }
-*/
 
 const Search = ({ header }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [dropdown, setDropdown] = useState(false);
 
-  console.log(results);
+  // console.log("Search Results >>> ", results);
 
   /**** Search Button is Clicked ****/
   const handleSubmit = async (e) => {
@@ -26,30 +21,7 @@ const Search = ({ header }) => {
     if (query.length === 0) return;
 
     // Call IMDB API and get search results
-    await axios
-      .get(
-        `https://imdb-api.com/en/api/searchmovie/${process.env.REACT_APP_IMDB_API_KEY}/${query}`
-      )
-      .then((res) => {
-        setResults(
-          res.data.results.map(({ id, title, description, image }) => ({
-            id: id,
-            title: title,
-            titleExtension: description,
-            image: image,
-          }))
-        );
-      });
-
-    // Call OMDB API and get search results
-    // await axios
-    //   .get(
-    //     `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${query}&type=movie`
-    //   )
-    //   .then((res) => {
-    //     console.log(res.data.Search);
-    //     setResults(res.data.Search);
-    //   });
+    searchInTMDB(query, setResults);
 
     // Open the dropdown
     setDropdown(true);
@@ -120,20 +92,6 @@ const Search = ({ header }) => {
               setDropdown={setDropdown}
             />
           ))}
-          {/* {results?.map(
-            ({ imdbID, Poster, Title, Year }) =>
-              Poster.localeCompare("N/A") !== 0 && (
-                <SearchItem
-                  key={imdbID}
-                  id={imdbID}
-                  image={Poster}
-                  title={Title}
-                  description={Year}
-                  setQuery={setQuery}
-                  setDropdown={setDropdown}
-                />
-              )
-          )} */}
         </div>
       )}
     </div>

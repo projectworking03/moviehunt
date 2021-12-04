@@ -1,15 +1,19 @@
+/* Container */
 .reviewPage__container {
+    position: relative;
     display: flex;
     align-items: flex-start;
     width: 100%;
     padding: 50px 20px;
     max-width: 1000px;
+    min-height: 80vh;
     margin: 0 auto;
 }
 
 /* Image */
 .reviewPage__image > img {
     height: 500px;
+    width: 400px;
     object-fit: contain;
 }
 
@@ -41,9 +45,11 @@
 
 .reviewPage__ratings {
     margin-top: 25px;
+    width: 100%;
 }
 
 .reviewPage__ratings > h4 {
+    margin-bottom: 8px;
     font-size: 24px;
     color: var(--primary-green);
 }

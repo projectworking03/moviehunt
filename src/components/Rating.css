@@ -1,0 +1,13 @@
+.rating {
+    font-size: 20px;
+}
+
+.rating__name {
+    padding: 9px 40px 9px 0;
+    border-bottom: 1px solid var(--secondary-black);
+}
+
+.rating__value {
+    border-bottom: 1px solid var(--secondary-black);
+    color: var(--primary-pink);
+}
