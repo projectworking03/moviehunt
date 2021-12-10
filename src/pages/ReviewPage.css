@@ -23,18 +23,19 @@
 }
 
 .reviewPage__title {
+    font-size: 34px;
     color: var(--primary-green);
 }
 
 .reviewPage__plot {
     margin: 10px 0 0 0;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .reviewPage__genres, 
 .reviewPage__languages, 
 .reviewPage__stars {
-    margin-top: 10px;
+    margin-top: 8px;
     font-size: 17px;
 }
 
@@ -44,12 +45,12 @@
 }
 
 .reviewPage__ratings {
-    margin-top: 25px;
+    margin-top: 10px;
     width: 100%;
 }
 
 .reviewPage__ratings > h4 {
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     font-size: 24px;
     color: var(--primary-green);
 }

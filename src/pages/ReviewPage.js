@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "./ReviewPage.css";
-import { fetchDetailsFromTMDB } from "../utilities/movieDetails";
-import fetchRatings from "../utilities/ratings";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
+import Subtitle from "../components/Subtitle";
 import Rating from "../components/Rating";
+import { fetchDetailsFromTMDB } from "../fetch-data/movieDetails";
+import fetchRatings from "../fetch-data/ratings";
+import addMovieToFirebase, { checkMovieInFirebase } from "../firebase/addMovie";
+import { db } from "../firebase";
 
 const ReviewPage = () => {
   const [ratings, setRatings] = useState(null);
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [existsInFirebase, setExistsInFirebase] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,27 +26,60 @@ const ReviewPage = () => {
     return true;
   };
 
-  /**** Fetch Movie Details and TMDB rating */
+  /**** Check for movie in Firebase ****/
   useEffect(() => {
-    // ID validation
-    if (isValidId(id) === false) navigate(`error`);
+    const fetchData = async () => {
+      // ID validation
+      if (isValidId(id) === false) navigate(`error`);
 
-    // Fetch data
-    fetchDetailsFromTMDB(id, setDetails, setRatings, setLoading);
+      // Start Loader
+      setLoading(true);
+
+      // Check in firebase
+      const doesExist = await checkMovieInFirebase(id);
+      setExistsInFirebase(doesExist);
+
+      // If exists in Firebase, fetch from Firebase
+      if (doesExist) {
+        db.collection("movies")
+          .doc(id)
+          .onSnapshot((doc) => {
+            setDetails(doc.data().details);
+            setRatings(doc.data().ratings);
+            setLoading(false);
+          });
+      } else {
+        fetchDetailsFromTMDB(id, setDetails);
+      }
+    };
+
+    fetchData();
   }, [id, navigate]);
 
-  /**** Fetch other ratings ****/
+  // console.log(details);
+
+  /**** Fetch Ratings ****/
   useEffect(() => {
-    if (details) {
-      fetchRatings(details.title, setRatings);
+    if (details && !existsInFirebase) {
+      fetchRatings(details, setRatings, setLoading);
     }
-  }, [details]);
+  }, [existsInFirebase, details]);
+
+  /**** Add details and ratings to Firebase */
+  useEffect(() => {
+    if (details && ratings && !existsInFirebase) {
+      addMovieToFirebase(details, ratings);
+    }
+  }, [details, ratings, existsInFirebase]);
 
   return (
     <>
       <Header />
       <div className="reviewPage">
-        <div className="reviewPage__container">
+        <div
+          className="reviewPage__container"
+          // style={{ backgroundUrl: details?.backdropImage }}
+        >
           {loading ? (
             <Loader size={45} />
           ) : (
@@ -56,6 +93,9 @@ const ReviewPage = () => {
               <div className="reviewPage__details">
                 {/* Title */}
                 <h1 className="reviewPage__title">{details.title}</h1>
+
+                {/* Subtitle */}
+                <Subtitle details={details} />
 
                 {/* Plot */}
                 <p className="reviewPage__plot">{details.plot}</p>
@@ -71,7 +111,7 @@ const ReviewPage = () => {
                 {/* Languages */}
                 {details.languages && (
                   <p className="reviewPage__languages">
-                    <span className="label">Languages: </span>
+                    <span className="label">Available in: </span>
                     {details.languages}
                   </p>
                 )}
@@ -90,8 +130,12 @@ const ReviewPage = () => {
 
                   <table cellSpacing={0}>
                     <tbody>
-                      {Object.keys(ratings).map((name, index) => (
-                        <Rating key={index} name={name} value={ratings[name]} />
+                      {ratings?.map((rating, index) => (
+                        <Rating
+                          key={index}
+                          provider={rating.provider}
+                          value={rating.value}
+                        />
                       ))}
                     </tbody>
                   </table>

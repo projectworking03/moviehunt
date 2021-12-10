@@ -1,0 +1,20 @@
+.subtitle {
+    display: flex;
+    margin: 5px 0;
+    font-size: 15px;
+    color: var(--secondary-gray);
+}
+
+.subtitle__cell {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.subtitle__cellText {
+    padding-left: 5px;
+}
+
+.subtitle__cellIcon {
+    font-size: 17px !important;
+}

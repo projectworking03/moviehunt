@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { searchInTMDB } from "../utilities/searchResults";
+import { searchInTMDB } from "../fetch-data/searchResults";
 
 import "./Search.css";
 import SearchItem from "./SearchItem";

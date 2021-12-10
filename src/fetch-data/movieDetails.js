@@ -1,20 +1,11 @@
 import axios from "axios";
-import { convertOptionsToUrl } from ".";
+import { convertOptionsToUrl } from "./utilities";
 
 /*
- * Ratings: { imdb, rottenTomatoes, metacritic }
- * Details: { id, imdbId, title, originalLanguage, runtime, releaseDate, image, plot, genres, languages, stars, }
+ * Details: { id, imdbId, title, originalLanguage, runtime, releaseDate, image, backdropImage, plot, genres, languages, stars, tmdbRating }
  */
 
-export const fetchDetailsFromTMDB = async (
-  id,
-  setDetails,
-  setRatings,
-  setLoading
-) => {
-  // Start the loader
-  setLoading(true);
-
+export const fetchDetailsFromTMDB = async (id, setDetails) => {
   // Define the options
   const options = {
     api_key: process.env.REACT_APP_TMDB_API_KEY,
@@ -23,7 +14,7 @@ export const fetchDetailsFromTMDB = async (
   // Convert options to string
   const optionsStr = convertOptionsToUrl(options);
 
-  // Call the API
+  // Call the TMDB API
   await axios
     .get(`https://api.themoviedb.org/3/movie/${id}?${optionsStr}`)
     .then((res) => {
@@ -36,30 +27,23 @@ export const fetchDetailsFromTMDB = async (
         runtime: res.data.runtime,
         releaseDate: res.data.release_date,
         image: `https://image.tmdb.org/t/p/original${res.data.poster_path}`,
+        backdropImage: `https://image.tmdb.org/t/p/original${res.data.backdrop_path}`,
         plot: res.data.overview,
         genres: res.data.genres.map((genre) => genre.name).join(", "),
         languages: res.data.spoken_languages
           .map((lang) => lang.english_name)
           .join(", "),
         stars: null,
+        tmdbRating: res.data.vote_average,
       });
-
-      // Add TMDB movie ratings
-      setRatings((prevRatings) => ({
-        ...prevRatings,
-        "The Movie Database": res.data.vote_average,
-      }));
     })
     .catch((err) => console.log("Fetch Movie Details Error >>> ", err));
-
-  // Stop the loader
-  setLoading(false);
 };
 
 export const fetchDetailsFromIMDB = async (
   id,
-  setRatings,
   setDetails,
+  setRatings,
   setLoading
 ) => {
   // Start the loader

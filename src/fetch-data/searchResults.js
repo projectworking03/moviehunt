@@ -1,5 +1,5 @@
 import axios from "axios";
-import { convertOptionsToUrl } from ".";
+import { convertOptionsToUrl } from "./utilities";
 
 /*
 Structure of Results: [{}, {}, {}, ...]
