@@ -1,0 +1,28 @@
+.streamers {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.streamers__label {
+    color: var(--primary-green);
+}
+
+.streamers__value {
+    display: flex;
+    margin-left: 4px;
+}
+
+.streamers__linkContainer {
+    margin-left: 4px;
+}
+
+.streamers__link {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.streamers__link:hover {
+    text-decoration: underline;
+}

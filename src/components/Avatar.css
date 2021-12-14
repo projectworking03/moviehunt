@@ -1,0 +1,26 @@
+.avatar__signIn {
+    padding: 7px 15px;
+    font-size: 16px;
+    background-color: var(--primary-green);
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    color: var(--original-black);
+    cursor: pointer;
+}
+
+.avatar__signIn:hover {
+    transition: all 150ms ease-in-out;
+    background-color: #00A071;
+}
+
+.avatar__logoutContainer {
+    display: flex;
+    align-items: center;
+}
+
+.avatar__greet {
+    margin-right: 30px;
+    color: var(--secondary-gray);
+    font-size: 19px;
+}

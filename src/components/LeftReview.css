@@ -1,0 +1,6 @@
+/* Image */
+.leftReview > img {
+    height: 500px;
+    width: 400px;
+    object-fit: contain;
+}

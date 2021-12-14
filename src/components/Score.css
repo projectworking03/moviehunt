@@ -1,0 +1,32 @@
+.score {
+    display: flex;
+}
+
+.score__container {
+    padding: 5px 12px;
+}
+
+.score__title {
+    font-size: 22px;
+    color: var(--primary-gray);
+}
+
+.score__value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    margin: 7px auto 0 auto;
+    border-radius: 50%;
+    background-color: var(--primary-green);
+    color: var(--original-black);
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.score__divider {
+    height: 100%;
+    width: 1px;
+    background-color: var(--secondary-black);
+}

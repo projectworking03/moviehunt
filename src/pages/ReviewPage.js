@@ -5,22 +5,27 @@ import "./ReviewPage.css";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Subtitle from "../components/Subtitle";
-import Rating from "../components/Rating";
+import Ratings from "../components/Ratings";
+import LeftReview from "../components/LeftReview";
+import MovieDetail from "../components/MovieDetail";
+import Streamers from "../components/Streamers";
 import { fetchDetailsFromTMDB } from "../fetch-data/movieDetails";
 import fetchRatings from "../fetch-data/ratings";
-import addMovieToFirebase, { checkMovieInFirebase } from "../firebase/addMovie";
-import { db } from "../firebase";
+import addMovieToFirebase, {
+  checkMovieInFirebase,
+  getMovieFromFirebase,
+} from "../firebase/movie";
 
 const ReviewPage = () => {
   const [ratings, setRatings] = useState(null);
   const [details, setDetails] = useState(null);
+  const [streamers, setStreamers] = useState(null);
+  const [mhScore, setMhScore] = useState(0);
+  const [othersScore, setOthersScore] = useState(0);
   const [loading, setLoading] = useState(true);
   const [existsInFirebase, setExistsInFirebase] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // console.log("Details >>> ", details);
-  // console.log("Ratings >>> ", ratings);
 
   const isValidId = (_id) => {
     return true;
@@ -41,13 +46,15 @@ const ReviewPage = () => {
 
       // If exists in Firebase, fetch from Firebase
       if (doesExist) {
-        db.collection("movies")
-          .doc(id)
-          .onSnapshot((doc) => {
-            setDetails(doc.data().details);
-            setRatings(doc.data().ratings);
-            setLoading(false);
-          });
+        getMovieFromFirebase(
+          id,
+          setDetails,
+          setRatings,
+          setStreamers,
+          setOthersScore,
+          setMhScore,
+          setLoading
+        );
       } else {
         fetchDetailsFromTMDB(id, setDetails);
       }
@@ -56,21 +63,26 @@ const ReviewPage = () => {
     fetchData();
   }, [id, navigate]);
 
-  // console.log(details);
-
-  /**** Fetch Ratings ****/
+  /**** Fetch Ratings, Streamers ****/
   useEffect(() => {
     if (details && !existsInFirebase) {
-      fetchRatings(details, setRatings, setLoading);
+      fetchRatings(
+        details,
+        setRatings,
+        setStreamers,
+        setMhScore,
+        setOthersScore,
+        setLoading
+      );
     }
   }, [existsInFirebase, details]);
 
-  /**** Add details and ratings to Firebase */
+  /**** Add details, ratings, streamers and mhscore to Firebase */
   useEffect(() => {
-    if (details && ratings && !existsInFirebase) {
-      addMovieToFirebase(details, ratings);
+    if (details && ratings && streamers && !existsInFirebase) {
+      addMovieToFirebase(details, ratings, streamers, mhScore, othersScore);
     }
-  }, [details, ratings, existsInFirebase]);
+  }, [details, ratings, streamers, mhScore, othersScore, existsInFirebase]);
 
   return (
     <>
@@ -78,68 +90,33 @@ const ReviewPage = () => {
       <div className="reviewPage">
         <div
           className="reviewPage__container"
-          // style={{ backgroundUrl: details?.backdropImage }}
+          style={{ backgroundUrl: details?.backdropImage }}
         >
           {loading ? (
             <Loader size={45} />
           ) : (
             <>
-              {/* Image */}
-              <div className="reviewPage__image">
-                <img src={details.image} alt="Movie Poster" />
-              </div>
+              <LeftReview details={details} mhScore={mhScore} />
 
               {/* Details */}
               <div className="reviewPage__details">
-                {/* Title */}
                 <h1 className="reviewPage__title">{details.title}</h1>
 
-                {/* Subtitle */}
                 <Subtitle details={details} />
 
-                {/* Plot */}
                 <p className="reviewPage__plot">{details.plot}</p>
 
-                {/* Genres */}
-                {details.genres && (
-                  <p className="reviewPage__genres">
-                    <span className="label">Genres: </span>
-                    {details.genres}
-                  </p>
-                )}
+                <MovieDetail label="Genres" value={details.genres} />
+                <MovieDetail label="Languages" value={details.languages} />
 
-                {/* Languages */}
-                {details.languages && (
-                  <p className="reviewPage__languages">
-                    <span className="label">Available in: </span>
-                    {details.languages}
-                  </p>
-                )}
+                <Streamers streamers={streamers} />
 
-                {/* Stars */}
-                {details.stars && (
-                  <div className="reviewPage__stars">
-                    <span className="label">Starring: </span>
-                    {details.stars}
-                  </div>
-                )}
-
-                {/* Ratings */}
-                <div className="reviewPage__ratings">
-                  <h4>Ratings:</h4>
-
-                  <table cellSpacing={0}>
-                    <tbody>
-                      {ratings?.map((rating, index) => (
-                        <Rating
-                          key={index}
-                          provider={rating.provider}
-                          value={rating.value}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <h2 className="reviewPage__ratingsTitle">Ratings:</h2>
+                <Ratings
+                  details={details}
+                  ratings={ratings}
+                  mhScore={mhScore}
+                />
               </div>
             </>
           )}

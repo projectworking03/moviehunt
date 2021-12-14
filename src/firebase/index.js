@@ -17,4 +17,4 @@ const app = firebase.initializeApp(firebaseConfig);
 
 // Extract the services that you want
 export const db = app.firestore();
-// export const auth = firebase.auth()
+export const auth = firebase.auth();

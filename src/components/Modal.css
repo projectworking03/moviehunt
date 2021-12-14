@@ -1,0 +1,118 @@
+.modal__overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+}
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--primary-black);
+}
+
+.modal__titleContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px 5px 0 5px;
+}
+
+.modal__title {
+    color: var(--primary-green);
+    font-size: 26px;
+}
+
+.modal__closeIcon {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    transform: translate(-22%, 22%);
+    font-size: 26px !important;
+    cursor: pointer;
+}
+
+.modal__closeIcon:hover {
+    transition: all 150ms ease-in-out;
+    color: var(--secondary-gray);
+}
+
+.modal__form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.modal__inputContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-left: 10px;
+    margin-top: 20px;
+    border: 1px solid var(--secondary-black);
+}
+
+.modal__inputContainer:focus-within {
+    border: 1px solid var(--primary-green);
+}
+
+.modal__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    background-color: inherit;
+    color: var(--primary-gray);
+    font-size: 18px;
+}
+
+.modal__input::placeholder {
+    color: var(--secondary-gray);
+}
+
+.modal__input:focus + .modal__inputIcon {
+    color: var(--primary-green);
+}
+
+.modal__inputIcon {
+    color: var(--secondary-gray);
+}
+
+.modal__signUp {
+    width: 100%;
+    display: block;
+    margin-top: 25px;
+    padding: 8px;
+    font-size: 16px;
+    background-color: var(--primary-green);
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal__signUp:hover {
+    transition: all 150ms ease-in-out;
+    background-color: var(--secondary-green);
+}
+
+.modal__switch {
+    margin: 15px 0 25px 0;
+    text-align: center;
+}
+
+.modal__switch span {
+    color: var(--primary-blue);
+    cursor: pointer;
+}
+
+.modal__switch span:hover {
+    text-decoration: underline;
+}
