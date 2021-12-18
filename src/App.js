@@ -9,6 +9,7 @@ import "./App.css";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import ReviewPage from "./pages/ReviewPage";
+import TopMovies from "./pages/TopMovies";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
 
           {/* Error Page */}
           <Route path="/error" element={<ErrorPage />} />
+
+          {/* Top Movies Page */}
+          <Route path="/top-movies" element={<TopMovies />} />
 
           {/* Redirect */}
           <Route path="*" element={<Navigate replace to="/" />} />

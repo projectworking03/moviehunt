@@ -2,13 +2,30 @@ import axios from "axios";
 import { convertOptionsToUrl } from "./utilities";
 
 /*
- * Details: { id, imdbId, title, originalLanguage, runtime, releaseDate, image, backdropImage, plot, genres, languages, stars, tmdbRating }
+ * Details: { 
+   id, 
+   imdbId, 
+   title, 
+   originalLanguage, 
+   runtime, 
+   releaseDate, 
+   image, 
+   backdropImage, 
+   plot, 
+   genres, 
+   languages, 
+   stars, 
+   tmdbRating, 
+   streamers
+  }
  */
 
 export const fetchDetailsFromTMDB = async (id, setDetails) => {
   // Define the options
   const options = {
     api_key: process.env.REACT_APP_TMDB_API_KEY,
+    language: "en-US",
+    append_to_response: "credits,watch/providers",
   };
 
   // Convert options to string
@@ -33,8 +50,16 @@ export const fetchDetailsFromTMDB = async (id, setDetails) => {
         languages: res.data.spoken_languages
           .map((lang) => lang.english_name)
           .join(", "),
-        stars: null,
+        stars: res.data.credits.cast
+          .slice(0, 4)
+          .map((star) => star.original_name)
+          .join(", "),
         tmdbRating: res.data.vote_average,
+        streamers:
+          res.data["watch/providers"].results.IN?.flatrate?.map((streamer) => ({
+            provider: streamer.provider_name,
+            logo: `https://image.tmdb.org/t/p/original${streamer.logo_path}`,
+          })) || null,
       });
     })
     .catch((err) => console.log("Fetch Movie Details Error >>> ", err));

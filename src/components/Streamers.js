@@ -2,21 +2,21 @@ import "./Streamers.css";
 
 const Streamers = ({ streamers }) => {
   return (
-    streamers.length > 0 && (
+    streamers?.length > 0 && (
       <div className="streamers">
         <p className="streamers__label">Streaming On: </p>
-        <div className="streamers__value">
+        <div className="streamers__values">
           {streamers.map((streamer, index) => (
-            <div className="streamers__linkContainer" key={index}>
-              <a
-                className="streamers__link"
-                href={streamer.url}
-                target="_blank"
-                rel="noreferrer"
-              >
+            <div key={index} className="streamers__value">
+              <img
+                src={streamer.logo}
+                alt="Streamer logo"
+                className="streamers__logo"
+              />
+              <p className="streamers__name">
                 {streamer.provider}
-              </a>
-              {index !== streamers.length - 1 && ", "}
+                {index !== streamers.length - 1 && ", "}
+              </p>
             </div>
           ))}
         </div>

@@ -1,8 +1,9 @@
 .movieDetail {
     margin-top: 8px;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .movieDetail span {
-    color: var(--primary-green);
+    color: var(--primary-blue);
+    font-weight: bold;
 }

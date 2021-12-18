@@ -8,9 +8,6 @@ const Hero = () => {
       <div className="hero__overlay">
         {/* Branding */}
         <div className="hero__branding">
-          <h1>
-            <span>M</span>ovie<span>H</span>unt
-          </h1>
           <h3>
             Search movies and analyse their reviews by the most prominent sites
             of the world!

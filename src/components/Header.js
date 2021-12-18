@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import "./Header.css";
 import Search from "./Search";
 import Avatar from "./Avatar";
+import Navbar from "./Navbar";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,8 +17,13 @@ const Header = () => {
       <div className="header__branding" onClick={handleBrandClick}>
         <h1>MovieHunt</h1>
       </div>
+
       <Search header />
-      <Avatar />
+
+      <div className="header__right">
+        <Navbar />
+        <Avatar />
+      </div>
     </div>
   );
 };

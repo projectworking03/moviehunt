@@ -21,7 +21,7 @@ const Avatar = () => {
     return () => unsubscribe();
   }, []);
 
-  const displayName = (name) => name.split(" ")[0];
+  // const displayName = (name) => name.split(" ")[0];
 
   const openModal = () => setModal(true);
 
@@ -31,9 +31,9 @@ const Avatar = () => {
 
       {user ? (
         <div className="avatar__logoutContainer">
-          <p className="avatar__greet">
+          {/* <p className="avatar__greet">
             Welcome, {displayName(user.displayName)}!
-          </p>
+          </p> */}
           <button className="avatar__signIn" onClick={signoutUser}>
             Logout
           </button>

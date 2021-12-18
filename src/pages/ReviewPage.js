@@ -19,7 +19,6 @@ import addMovieToFirebase, {
 const ReviewPage = () => {
   const [ratings, setRatings] = useState(null);
   const [details, setDetails] = useState(null);
-  const [streamers, setStreamers] = useState(null);
   const [mhScore, setMhScore] = useState(0);
   const [othersScore, setOthersScore] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -50,7 +49,6 @@ const ReviewPage = () => {
           id,
           setDetails,
           setRatings,
-          setStreamers,
           setOthersScore,
           setMhScore,
           setLoading
@@ -63,26 +61,19 @@ const ReviewPage = () => {
     fetchData();
   }, [id, navigate]);
 
-  /**** Fetch Ratings, Streamers ****/
+  /**** Fetch Ratings ****/
   useEffect(() => {
     if (details && !existsInFirebase) {
-      fetchRatings(
-        details,
-        setRatings,
-        setStreamers,
-        setMhScore,
-        setOthersScore,
-        setLoading
-      );
+      fetchRatings(details, setRatings, setMhScore, setOthersScore, setLoading);
     }
   }, [existsInFirebase, details]);
 
   /**** Add details, ratings, streamers and mhscore to Firebase */
   useEffect(() => {
-    if (details && ratings && streamers && !existsInFirebase) {
-      addMovieToFirebase(details, ratings, streamers, mhScore, othersScore);
+    if (details && ratings && !existsInFirebase) {
+      addMovieToFirebase(details, ratings, mhScore, othersScore);
     }
-  }, [details, ratings, streamers, mhScore, othersScore, existsInFirebase]);
+  }, [details, ratings, mhScore, othersScore, existsInFirebase]);
 
   return (
     <>
@@ -107,9 +98,10 @@ const ReviewPage = () => {
                 <p className="reviewPage__plot">{details.plot}</p>
 
                 <MovieDetail label="Genres" value={details.genres} />
-                <MovieDetail label="Languages" value={details.languages} />
+                {/* <MovieDetail label="Languages" value={details.languages} /> */}
+                <MovieDetail label="Starring" value={details.stars} />
 
-                <Streamers streamers={streamers} />
+                <Streamers streamers={details.streamers} />
 
                 <h2 className="reviewPage__ratingsTitle">Ratings:</h2>
                 <Ratings

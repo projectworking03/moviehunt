@@ -7,10 +7,11 @@
 }
 
 .header__branding > h1 {
-    text-transform: uppercase;
     color: var(--primary-green);
-    letter-spacing: 2px;
-    font-size: 25px;
-    font-weight: 600;
     cursor: pointer;
+}
+
+.header__right {
+    display: flex;
+    align-items: center;
 }

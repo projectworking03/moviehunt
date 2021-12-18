@@ -9,7 +9,6 @@ import {
 const fetchRatings = async (
   details,
   setRatings,
-  setStreamers,
   setMhScore,
   setOthersScore,
   setLoading
@@ -39,7 +38,6 @@ const fetchRatings = async (
 
   // Set the states
   setRatings(ratings);
-  setStreamers(bingResponse.streamingPlatforms);
   setLoading(false);
 };
 

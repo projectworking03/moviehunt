@@ -1,0 +1,28 @@
+.homeHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+}
+
+.homeHeader__container {
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.homeHeader__branding {
+    color: var(--primary-green);
+    cursor: pointer;
+}
+
+.homeHeader__right {
+    display: flex;
+    align-items: center;
+}

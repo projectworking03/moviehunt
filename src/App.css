@@ -17,6 +17,7 @@
   --secondary-green: #00A071;
   --primary-pink: #FF00FF;
   --primary-blue: #00C6CF;
+  --secondary-blue: #009EA7;
 
   --original-black: #181818;
   --original-white: #ffffff;
@@ -26,4 +27,5 @@ body {
   background-color: var(--primary-black);
   font-family: 'Roboto', sans-serif;
   color: var(--primary-gray);
+  overflow-x: hidden;
 }
